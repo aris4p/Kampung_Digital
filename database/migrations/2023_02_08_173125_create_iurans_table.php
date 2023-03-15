@@ -14,9 +14,10 @@ class CreateIuransTable extends Migration
     public function up()
     {
         Schema::create('iurans', function (Blueprint $table) {
-            $table->id();
-            $table->nama_iuran;
-
+            $table->string('idtrx')->primary();
+            $table->string('jenistrx');
+            $table->date('tgltrx');
+            $table->enum('statustrx',['1','2']);
             $table->timestamps();
         });
     }

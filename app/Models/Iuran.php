@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Iuran extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['idtrx','jenistrx','tgltrx','statustrx'];
 }
