@@ -46,6 +46,13 @@ Route::get('selectKota/{id}', [WargaController::class, 'selectKota' ]);
 Route::get('selectKecamatan/{id}', [WargaController::class, 'selectKecamatan' ]);
 Route::get('selectKelurahan/{id}', [WargaController::class, 'selectKelurahan' ]);
 
-Route::get('iuran', [IuranController::class, 'index'])->name('iuran');
+Route::group( ['middleware'=>'auth'], function() {
+    Route::get('iuran',[IuranController::class,'index'])->name('iuran');
+    Route::get('iuran/tambah',[IuranController::class,'payment'])->name('tambah');
+    Route::post('iuran/payment',[IuranController::class,'payment'])->name('payment');
+});
+
+// Route::get('iuran', [IuranController::class, 'index'])->name('iuran');
+// Route::get('iuran/tambah', [IuranController::class, 'payment'])->name('tambah');
 
 

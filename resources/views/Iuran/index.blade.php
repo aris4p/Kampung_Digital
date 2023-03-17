@@ -15,7 +15,7 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Data Transaksi Dansos</h5>
-      <a href="/datawarga/tambah" class="btn btn-primary mb-3">Transaksi Baru </a>
+      <a href="{{ route('tambah') }}" class="btn btn-primary mb-3">Transaksi Baru </a>
       @if ($message = Session::get('Success') )
       <div class="alert alert-success alert-block">
         <strong>{{ $message }}</strong>
@@ -33,6 +33,7 @@
             <th scope="col">ID Transaksi</th>
             <th scope="col">Jenis Transaksi</th>
             <th scope="col">Tanggal Transaksi</th>
+            <th scope="col">Nominal</th>
             <th scope="col">Status</th>
 
 
@@ -101,6 +102,7 @@ $(document).ready(function () {
             { data: 'idtrx', name: 'idtrx' },
             { data: 'jenistrx', name: 'jenistrx' },
             { data: 'tgltrx', name: 'tgltrx' },
+            { data: 'nominaltrx', name: 'nominaltrx' },
             { data: 'statustrx', name: 'statustrx' },
 
 
