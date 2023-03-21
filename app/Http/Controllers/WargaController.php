@@ -50,7 +50,8 @@ class WargaController extends Controller
             $warga = Warga::where('id',$id)->first();
             $parseTgl = Carbon::parse($warga->tglLahir)->translatedFormat('l, d F Y');
             // dd($warga);
-            $provinsi = Warga::with("province")->find($id);
+            $provinsi = Warga::with("province")->first($id);
+            dd($provinsi);
             $kota = Warga::with("regency")->find($id);
             $kecamatan = Warga::with("district")->find($id);
             $kelurahan = Warga::with("village")->find($id);

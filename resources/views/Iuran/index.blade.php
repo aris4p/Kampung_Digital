@@ -16,10 +16,15 @@
     <div class="card-body">
       <h5 class="card-title">Data Transaksi Dansos</h5>
       <a href="{{ route('tambah') }}" class="btn btn-primary mb-3">Transaksi Baru </a>
-      @if ($message = Session::get('Success') )
+      @if ($message = Session::get('alert-success') )
       <div class="alert alert-success alert-block">
         <strong>{{ $message }}</strong>
         </div>
+        @elseif($message = Session::get('alert-failed') )
+      <div class="alert alert-success alert-block">
+        <strong>{{ $message }}</strong>
+        </div>
+
   @endif
 
       <!-- Table with hoverable rows -->
@@ -101,7 +106,7 @@ $(document).ready(function () {
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'idtrx', name: 'idtrx' },
             { data: 'jenistrx', name: 'jenistrx' },
-            { data: 'tgltrx', name: 'tgltrx' },
+            { data: 'created_at', name: 'created_at' },
             { data: 'nominaltrx', name: 'nominaltrx' },
             { data: 'statustrx', name: 'statustrx' },
 

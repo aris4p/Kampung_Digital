@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Iuran;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -20,7 +21,7 @@ class IuranController extends Controller
             return DataTables::of($iuran)
             ->addIndexColumn()
             ->editColumn('statustrx', function($iuran){
-                if ($iuran->statustrx == 0) return '<div class="btn btn-sm btn-warning">Belum Lunas</div>';
+                if ($iuran->statustrx == 'pending') return '<div class="btn btn-sm btn-warning">Belum Lunas</div>';
                 return '<div class="btn btn-sm btn-danger">Lunas</div>';
             })
             ->rawColumns(['statustrx'])
@@ -103,9 +104,24 @@ class IuranController extends Controller
     public function payment(Request $request)
     {
 
+        // $warga = Warga::where('nik', $request->id_nik )->first();
+        // dd($warga->nama);
 
+
+        $request->request->add(['idtrx'=> 'TRX-'.date('Ymdh').rand('10','9999')]);
+        // dd($request->all());
+        $payment = $request->all();
+        $iuran = Warga::where('nik', $request->id_nik)->first();
+
+        // dd($iuran);
+        // dd($request->idtrx);
+        // dd($payment->idtrx);
+
+
+
+        // dd($payment);
         // Set your Merchant Server Key
-        \Midtrans\Config::$serverKey = 'SB-Mid-server-lfUukJmI2f5bhEp7StcPwCOg';
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
         \Midtrans\Config::$isProduction = false;
         // Set sanitization on (default)
@@ -115,31 +131,59 @@ class IuranController extends Controller
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => rand(),
-                'gross_amount' => 40000,
+                'order_id' => $request->idtrx,
+                'gross_amount' => $request->nominaltrx,
             ),
             'item_details'  => array(
                 [
-                    'id' => 'DANA-DANSOS',
-                    'price'  =>  35000,
-                    'quantity' => 10,
-                    'name' => 'DANSOS',
-                ],[
-                    'id' => 'DANA-ZAKAT',
-                    'price'  =>  80000,
-                    'quantity' => 2,
-                    'name' => 'Zakat',
+                    'id' => 'DNS-788',
+                    'price'  =>  $request->nominaltrx,
+                    'quantity' => 1,
+                    'name' => $request->jenistrx,
                     ]
                 ),
                 'customer_details' => array(
-                    'first_name' => 'budi',
-                    'last_name' => 'pratama',
-                    'email' => 'budi.pra@example.com',
-                    'phone' => '08111222333',
+                    'first_name' => $iuran->nama,
+                    'last_name' =>  '',
+                    'email' => 'arisanggara72@gmail.com',
+                    'phone' =>  $iuran->nohp,
                 ),
             );
-
+            // dd($params);
             $snapToken = \Midtrans\Snap::getSnapToken($params);
+            $parameter = json_decode(json_encode($params, true));
+            // dd($parameter);
+            return view('Iuran.payment',[
+                'title' => "Transaksi",
+                'snaptoken' => $snapToken,
+                'request' => $request,
+
+                'parameter' => $parameter,
+            ]);
+
+        }
+
+        public function payment_post(Request $request)
+        {
+            $json = json_decode($request->get('json'));
+            // dd($json);
+
+            $iuran = new Iuran();
+
+
+            $data = [
+                'idtrx' => $json->order_id,
+                'id_nik' => $request->get('id_nik'),
+                'jenistrx' => $request->get('jenistrx'),
+                'nominaltrx' => $request->get('nominaltrx'),
+                'statustrx' => $json->transaction_status,
+            ];
+
+            return Iuran::create($data) ? redirect(route('iuran'))->with('alert-success', 'Transaksi Berhasil dibuat') : redirect(route('iuran'))->with('alert-failed', 'Error Terjadi kesalahan');
+
 
         }
     }
+
+
+

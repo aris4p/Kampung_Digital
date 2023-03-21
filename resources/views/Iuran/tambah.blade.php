@@ -13,12 +13,12 @@
     </nav>
 </div><!-- End Page Title -->
 
-<form action="{{ route('payment') }}" method="post" enctype="multipart/form-data">
-    @csrf
+<form action="{{ route('details-trx') }}" method="get" enctype="multipart/form-data">
+
     <div class="row mb-3">
         <label for="inputEmail" class="col-sm-2 col-form-label">nik</label>
         <div class="col-sm-10">
-            <input type="Text" class="form-control" id="nik" name="nik" value="{{ old('nik') }}">
+            <input type="Text" class="form-control" id="id_nik" name="id_nik" value="{{ old('id_nik') }}">
         </div>
     </div>
     <div class="row mb-3">
@@ -28,6 +28,12 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+        <label for="inputText" class="col-sm-2 col-form-label">Nominal</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="nominaltrx" name="nominaltrx" value="{{ old('nominaltrx') }}">
+        </div>
+    </div>
 
 
     <div class="row mb-3">
@@ -41,5 +47,6 @@
 
 </div>
 </div>
+
 
 @endsection

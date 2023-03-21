@@ -48,8 +48,9 @@ Route::get('selectKelurahan/{id}', [WargaController::class, 'selectKelurahan' ])
 
 Route::group( ['middleware'=>'auth'], function() {
     Route::get('iuran',[IuranController::class,'index'])->name('iuran');
-    Route::get('iuran/tambah',[IuranController::class,'payment'])->name('tambah');
-    Route::post('iuran/payment',[IuranController::class,'payment'])->name('payment');
+    Route::get('iuran/tambah',[IuranController::class,'create'])->name('tambah');
+    Route::get('iuran/payment',[IuranController::class,'payment'])->name('details-trx');
+    Route::post('iuran/payment',[IuranController::class,'payment_post']);
 });
 
 // Route::get('iuran', [IuranController::class, 'index'])->name('iuran');

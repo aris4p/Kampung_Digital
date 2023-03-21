@@ -21,7 +21,7 @@ class Warga extends Model
     // protected $dates = ['tglLahir'];
 
     function province(){
-        return $this->belongsTo(Province::class, 'provinsi_id','id');
+        return $this->belongsTo(Province::class, 'provinsi_id');
     }
     function regency(){
         return $this->belongsTo(Regency::class, 'kota_id','id');
@@ -31,5 +31,9 @@ class Warga extends Model
     }
     function village(){
         return $this->belongsTo(Village::class, 'kelurahan_id','id');
+    }
+
+    public function iuran(){
+        return $this->hasMany(Iuran::class);
     }
 }
