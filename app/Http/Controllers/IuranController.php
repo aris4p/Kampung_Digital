@@ -166,9 +166,7 @@ class IuranController extends Controller
         public function payment_post(Request $request)
         {
             $json = json_decode($request->get('json'));
-            // dd($json);
 
-            $iuran = new Iuran();
 
 
             $data = [
