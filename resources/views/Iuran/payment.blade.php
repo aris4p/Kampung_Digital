@@ -16,18 +16,18 @@
                 <p class="my-5 mx-5" style="font-size: 30px;">Detail Pembelian</p>
                 <div class="row">
                     <ul class="list-unstyled">
-                        <li class="text-black">{{ $parameter->customer_details->first_name }}</li>
-                        <li class="text-muted mt-1"><span class="text-black">Invoice</span> #{{ $request->idtrx }}</li>
-                        <li class="text-black mt-1">{{ $request->created_at }}</li>
+                        <li class="text-black">{{ $payment->warga->nama }}</li>
+                        <li class="text-muted mt-1"><span class="text-black">Invoice</span> #{{ $payment->idtrx }}</li>
+                        <li class="text-black mt-1">{{ $payment->created_at }}</li>
                     </ul>
                     <hr>
 
 
                     <div class="col-xl-10">
-                        <p>{{ $parameter->item_details[0]->name }}</p>
+                        <p>{{ $payment->dana->nama }}</p>
                     </div>
                     <div class="col-xl-2">
-                        <p class="float-end">Rp. {{$parameter->item_details[0]->price }}
+                        <p class="float-end">Rp. {{$payment->nominaltrx }}
                         </p>
                     </div>
 
@@ -36,7 +36,7 @@
                 <div class="row text-black">
 
                     <div class="col-xl-12">
-                        <p class="float-end fw-bold">Total: Rp.{{ $parameter->transaction_details->gross_amount }}
+                        <p class="float-end fw-bold">Total: Rp.{{ $payment->nominaltrx }}
                         </p>
                     </div>
                     <hr style="border: 2px solid black;">
@@ -66,7 +66,7 @@
         var payButton = document.getElementById('pay-button');
         payButton.addEventListener('click', function () {
             // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
-            window.snap.pay('{{ $snaptoken }}', {
+            window.snap.pay('{{ $payment->snap_token }}', {
                 onSuccess: function(result){
                     /* You may add your own implementation here */
                     send_respond_to_form(result);
@@ -86,10 +86,13 @@
             })
         });
 
-        function send_respond_to_form(result){
-            document.getElementById('json_callback').value = JSON.stringify(result);
-            $('#submit_form').submit();
-        }
+        /*
+            sementara tidak dipakai dahulu
+        */
+        // function send_respond_to_form(result){
+        //     document.getElementById('json_callback').value = JSON.stringify(result);
+        //     $('#submit_form').submit();
+        // }
 
     </script>
 </body>

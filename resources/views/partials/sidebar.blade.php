@@ -28,6 +28,10 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="{{url('iuran/dana') }}">
+              <i class="bi bi-circle"></i><span>Tambah Data Iuran</span>
+            </a>
+          <li>
             <a href="{{ route('iuran') }}">
               <i class="bi bi-circle"></i><span>Iuran Dansos</span>
             </a>

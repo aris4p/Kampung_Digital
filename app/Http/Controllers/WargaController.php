@@ -56,7 +56,7 @@ class WargaController extends Controller
         $kota = Warga::with("regency")->find($id);
         $kecamatan = Warga::with("district")->find($id);
         $kelurahan = Warga::with("village")->find($id);
-        $iuran = Warga::with('iuran')->where('nik' , $warga->nik)->paginate(5);
+        $iuran = Warga::with('iuran')->where('nik' , $warga->nik)->get();
 
         // dd($iuran);
 

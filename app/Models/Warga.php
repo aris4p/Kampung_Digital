@@ -20,6 +20,8 @@ class Warga extends Model
 
     // protected $dates = ['tglLahir'];
 
+
+
     function province(){
         return $this->belongsTo(Province::class, 'provinsi_id', 'id');
     }

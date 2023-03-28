@@ -51,7 +51,7 @@
             <label class="col-sm-2 col-form-label">Provinsi</label>
             <div class="col-sm-10">
                 <select class="form-select" id="provinsi" name="provinsi_id" aria-label="Default select example">
-                    <option value="">Pilih Provinsi</option>
+                    <option selected="selected" value="">Pilih Provinsi</option>
                 </select>
             </div>
         </div>
@@ -132,6 +132,10 @@
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
     });
 
+     $(document).on('select2:open', () => {
+        document.querySelector('.select2-search__field').focus();
+      });
+
     $(document).ready(function(){
 
         $("#provinsi").select2({
@@ -149,7 +153,8 @@
                     }
                 }
             }
-        });
+
+    });
 
         $("#provinsi").change(function(){
             let id = $('#provinsi').val();

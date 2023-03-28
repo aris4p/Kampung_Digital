@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DanaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IuranController;
 use App\Http\Controllers\LoginController;
@@ -49,11 +50,20 @@ Route::get('selectKelurahan/{id}', [WargaController::class, 'selectKelurahan' ])
 Route::group( ['middleware'=>'auth'], function() {
     Route::get('iuran',[IuranController::class,'index'])->name('iuran');
     Route::get('iuran/tambah',[IuranController::class,'create'])->name('tambah');
-    Route::get('iuran/payment',[IuranController::class,'payment'])->name('details-trx');
-    Route::post('iuran/payment',[IuranController::class,'payment_post']);
-});
+    Route::post('iuran/tambah',[IuranController::class,'store'])->name('tambah-data');
+    Route::get('selectDana',[IuranController::class,'getDana'])->name('get-Dana');
+    Route::get('getDanaNominal/{id}',[IuranController::class,'getDanaNominal']);
+    Route::get('iuran/lihat/{id}',[IuranController::class,'show'])->name('lihat-data');
 
-// Route::get('iuran', [IuranController::class, 'index'])->name('iuran');
-// Route::get('iuran/tambah', [IuranController::class, 'payment'])->name('tambah');
+    // Route::post('iuran/lihat/{id}',[IuranController::class,'payment_post']);
+
+
+    Route::resource('iuran/dana', DanaController::class, ['except' => [
+        'create', 'update','show'
+        ]]);
+    });
+
+
+
 
 

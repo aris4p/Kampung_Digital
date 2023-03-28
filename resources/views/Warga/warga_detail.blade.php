@@ -139,21 +139,33 @@
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">No</th>
                                         <th scope="col">TRX ID</th>
                                         <th scope="col">Jenis Trx</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                    $no = 1;
+                                    @endphp
                                     @foreach ($map as $value)
                                     <tr>
-                                        <th scope="row">5</th>
+                                        <th scope="row">{{ $no++ }}</th>
                                         <td>{{ $value['idtrx'] }}</td>
                                         <td>{{ $value['jenistrx'] }}</td>
-                                        <td>{{ $value['statustrx'] }}</td>
+                                        @if ($value['statustrx']  === "pending")
+                                        <td>
+                                            <a href="{{ route('datawarga') }}" class="btn btn-warning">Belum Bayar</a>
+                                        </td>
+                                        @else
+                                        <td>
+                                            <span class="btn btn-success">Sudah Bayar</span>
+                                        </td>
+                                        @endif
                                     </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
 
